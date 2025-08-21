@@ -22,6 +22,8 @@ public class ProdutoMain {
                 "\n[4] Alterar" +
                 "\n[5] Excluir" +
                 "\n[0] Sair";
+        // outra opção para listar apenas software
+        // outra opção para listar apenas hardware
 
         while (opcao != 0) {
             opcao = Integer.parseInt(JOptionPane.showInputDialog(menu));
@@ -57,14 +59,37 @@ public class ProdutoMain {
                     break;
 
                 case 3:
+
+                    String categoria = JOptionPane.showInputDialog(
+                            "Qual a categoria do produto\n" +
+                                    "Software ou Hardware?");
+
                     String novoNome = JOptionPane.showInputDialog("Digite o nome do produto");
                     double novoValor = Double.parseDouble(JOptionPane.showInputDialog("Digite o valor do produto"));
 
-                    Produto novoProduto = new Produto();
-                    novoProduto.setNome(novoNome);
-                    novoProduto.setValor(novoValor);
+                    if (categoria.equalsIgnoreCase("Software")) {
+                        ProdSoftware software = new ProdSoftware();
+                        software.setNome(novoNome);
+                        software.setValor(novoValor);
 
-                    service.addProduto(novoProduto);
+                        String versao = JOptionPane.showInputDialog("Qual a versão?");
+                        software.setVersao(versao);
+
+                        service.addProduto(software);
+                    } else if (categoria.equalsIgnoreCase("Hardware")) {
+                        ProdHardware hardware = new ProdHardware();
+                        hardware.setNome(novoNome);
+                        hardware.setValor(novoValor);
+
+                        int quantidade = Integer.parseInt(JOptionPane.showInputDialog("Qual a quantidade?"));
+                        hardware.setQuantidade(quantidade);
+
+                        service.addProduto(hardware);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Opção inválida!");
+                        break;
+                    }
+
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso!");
                     break;
 
